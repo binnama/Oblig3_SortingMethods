@@ -21,7 +21,7 @@ public class Sorting {
         }
         A = new int[n];
 
-        methods sort = new methods();
+        Methods sort = new Methods();
 
         if (n <= Max_Sequential) {
 
@@ -48,6 +48,12 @@ public class Sorting {
         sort.mergeSort(A, 0, n - 1);
         time = System.currentTimeMillis() - time;
         System.out.printf("Merge sort\t: %6.3f s\n", time / 1000.0);
+
+        randomize(A);
+        time = System.currentTimeMillis();
+        sort.radix(A, 5);
+        time = System.currentTimeMillis() - time;
+        System.out.printf("Radix sort\t: %6.3f s\n", time / 1000.0);
     }
 
     public static void randomize(int A[]) {

@@ -1,7 +1,6 @@
 
 package org.example.module;
 
-import java.io.*;
 import java.util.*;
 
 /*
@@ -11,9 +10,24 @@ import java.util.*;
 4. Radixsortering
 */
 
-public class methods {
+public class Methods {
 
-   void insertionSort(int A[]) {
+
+    int Max_Sequential  = 100_000;
+    int Max_n           = 100_000_000;
+
+    int A[];
+    int n               = 0;
+    long time           = 0;
+
+
+    if (n < 0 || n > Max_n) {
+        System.out.println("Use 1 <= n <= " + Max_n);
+        System.exit(1);
+    }
+    A = new int[n];
+
+  public void insertionSort(int A[]) {
         int n = A.length;
         int key;
 
@@ -27,9 +41,21 @@ public class methods {
             }
             A[j] = key;
         }
+
+      if (n <= Max_Sequential) {
+
+          // Insertion sort
+          randomize(A);
+          time = System.currentTimeMillis();
+          insertionSort(A);
+          time = System.currentTimeMillis() - time;
+          System.out.printf("Insertion sort\t: %6.3f s\n", time / 1000.0);
+      }
+      else
+          System.out.println("O(n²) sorting to slow for n: " + n);
     }
 
-    void quickSort(int A[], int min, int max) {
+    public void quickSort(int A[], int min, int max) {
 
         int indexofpartition;
 
@@ -38,9 +64,15 @@ public class methods {
             quickSort(A, min, indexofpartition - 1);
             quickSort(A, indexofpartition + 1, max);
         }
+        randomize(A);
+        time = System.currentTimeMillis();
+        quickSort(A, 0, n - 1);
+        time = System.currentTimeMillis() - time;
+        System.out.printf("Quicksort\t: %6.3f s\n", time / 1000.0);
+
     }
 
-    void mergeSort(int[] A, int min, int max) {
+    public void mergeSort(int[] A, int min, int max) {
 
        if (min ==max)
            return;
@@ -72,9 +104,14 @@ public class methods {
            else
                A[index1 + min] = temp[left++];
        }
+        randomize(A);
+        time = System.currentTimeMillis();
+        mergeSort(A, 0, n - 1);
+        time = System.currentTimeMillis() - time;
+        System.out.printf("Merge sort\t: %6.3f s\n", time / 1000.0);
     }
 
-    void radix(int[] A, int maxSiffer) {
+    public void radix(int[] A, int maxSiffer) {
 
        int tenInM = 1;
        int n = A.length;
@@ -100,6 +137,11 @@ public class methods {
 
            tenInM *= 10;
        }
+        randomize(A);
+        time = System.currentTimeMillis();
+        radix(A, 5);
+        time = System.currentTimeMillis() - time;
+        System.out.printf("Radix sort\t: %6.3f s\n", time / 1000.0);
    }
 
     private int findPartition (int[] A, int min, int max) {
@@ -127,5 +169,14 @@ public class methods {
         A[right] = temp;
 
         return right;
+    }
+
+    public static void randomize(int A[]) {
+        Random r = new Random();
+        int n = A.length;
+        int n2 = 2 * n;
+        for (int i = 0; i < n; i++) {
+            A[i] = r.nextInt(n2);
+        }
     }
 }
