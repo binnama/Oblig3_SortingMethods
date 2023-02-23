@@ -12,51 +12,38 @@ import java.util.*;
 
 public class Methods {
 
-
     int Max_Sequential  = 100_000;
-    int Max_n           = 100_000_000;
 
     int A[];
     int n               = 0;
     long time           = 0;
 
-
-    if (n < 0 || n > Max_n) {
-        System.out.println("Use 1 <= n <= " + Max_n);
-        System.exit(1);
-    }
-    A = new int[n];
-
   public void insertionSort(int A[]) {
-        int n = A.length;
-        int key;
-
-        for (int i = 1; i < n; i++) {
-            key = A[i];
-            int j = i;
-
-            while (j > 0 && A[j - 1] > key) {
-                A[j] = A[j - 1];
-                j--;
-            }
-            A[j] = key;
-        }
-
-      if (n <= Max_Sequential) {
-
-          // Insertion sort
-          randomize(A);
+          //randomize(A);
           time = System.currentTimeMillis();
-          insertionSort(A);
+
+          int n = A.length;
+          //System.out.println("Testing insert: " + n);
+          int key;
+
+          for (int i = 1; i < n; i++) {
+              key = A[i];
+              int j = i;
+
+              while (j > 0 && A[j - 1] > key) {
+                  A[j] = A[j - 1];
+                  j--;
+              }
+              A[j] = key;
+          }
+
           time = System.currentTimeMillis() - time;
           System.out.printf("Insertion sort\t: %6.3f s\n", time / 1000.0);
       }
-      else
-          System.out.println("O(n²) sorting to slow for n: " + n);
-    }
 
     public void quickSort(int A[], int min, int max) {
 
+        //randomize(A);
         int indexofpartition;
 
         if (max - min > 0) {
@@ -64,85 +51,71 @@ public class Methods {
             quickSort(A, min, indexofpartition - 1);
             quickSort(A, indexofpartition + 1, max);
         }
-        randomize(A);
-        time = System.currentTimeMillis();
-        quickSort(A, 0, n - 1);
-        time = System.currentTimeMillis() - time;
-        System.out.printf("Quicksort\t: %6.3f s\n", time / 1000.0);
-
     }
 
     public void mergeSort(int[] A, int min, int max) {
 
-       if (min ==max)
-           return;
+        //randomize(A);
+        if (min == max)
+            return;
 
-       int [] temp;
-       int index1, left, right;
-       int size = max - min + 1;
-       int mid = (min + max) / 2;
+        int [] temp;
+        int index1, left, right;
+        int size = max - min + 1;
+        int mid = (min + max) / 2;
 
-       temp = new int [size];
+        temp = new int [size];
 
-       mergeSort(A, min, mid);
-       mergeSort(A, min + 1, max);
+        mergeSort(A, min, mid);
+        mergeSort(A, min + 1, max);
 
-       for (index1 = 0; index1 < size; index1++)
-           temp[index1] = A[min + index1];
+        for (index1 = 0; index1 < size; index1++)
+            temp[index1] = A[min + index1];
 
-       left = 0;
-       right = mid - min + 1;
-       for (index1 = 0; index1 < size; index1++) {
-           if (right <= max - min)
-               if (left <= mid - min)
-                   if (temp[left] > temp[right])
-                       A[index1 + min] = temp[right++];
-                   else
-                       A[index1 + min] = temp[left++];
-               else
-                   A[index1 + min] = temp[right++];
-           else
-               A[index1 + min] = temp[left++];
-       }
-        randomize(A);
-        time = System.currentTimeMillis();
-        mergeSort(A, 0, n - 1);
-        time = System.currentTimeMillis() - time;
-        System.out.printf("Merge sort\t: %6.3f s\n", time / 1000.0);
+        left = 0;
+        right = mid - min + 1;
+        for (index1 = 0; index1 < size; index1++) {
+            if (right <= max - min)
+                if (left <= mid - min)
+                    if (temp[left] > temp[right])
+                        A[index1 + min] = temp[right++];
+                    else
+                        A[index1 + min] = temp[left++];
+                else
+                    A[index1 + min] = temp[right++];
+            else
+                A[index1 + min] = temp[left++];
+        }
     }
 
     public void radix(int[] A, int maxSiffer) {
 
-       int tenInM = 1;
-       int n = A.length;
-
-       Queue<Integer> [] Q = (Queue<Integer>[]) (new Queue[10]);
-
-       for (int i = 0; i < 10; i++) {
-           Q[i] = new LinkedList();
-       }
-
-       for (int m = 0; m < maxSiffer; m++) {
-           for (int i = 0; i < n; i++) {
-               int siffer = (A[i] / tenInM) % 10;
-               Q[siffer].add(new Integer(A[i]));
-           }
-
-           int j = 0;
-           for (int i = 0; i < 10; i++) {
-               while (!Q[i].isEmpty()){
-                   A[j++] = (int) Q[i].remove();
-               }
-           }
-
-           tenInM *= 10;
-       }
         randomize(A);
-        time = System.currentTimeMillis();
-        radix(A, 5);
-        time = System.currentTimeMillis() - time;
-        System.out.printf("Radix sort\t: %6.3f s\n", time / 1000.0);
-   }
+        int tenInM = 1;
+        int n = A.length;
+
+        Queue<Integer> [] Q = (Queue<Integer>[]) (new Queue[10]);
+
+        for (int i = 0; i < 10; i++) {
+            Q[i] = new LinkedList();
+        }
+
+        for (int m = 0; m < maxSiffer; m++) {
+            for (int i = 0; i < n; i++) {
+                int siffer = (A[i] / tenInM) % 10;
+                Q[siffer].add(new Integer(A[i]));
+            }
+
+            int j = 0;
+            for (int i = 0; i < 10; i++) {
+                while (!Q[i].isEmpty()){
+                    A[j++] = (int) Q[i].remove();
+                }
+            }
+
+            tenInM *= 10;
+        }
+    }
 
     private int findPartition (int[] A, int min, int max) {
         int left, right;
