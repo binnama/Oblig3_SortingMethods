@@ -19,7 +19,6 @@ public class Methods {
     long time           = 0;
 
   public void insertionSort(int A[]) {
-          //randomize(A);
           time = System.currentTimeMillis();
 
           int n = A.length;
@@ -43,7 +42,6 @@ public class Methods {
 
     public void quickSort(int A[], int min, int max) {
 
-        //randomize(A);
         int indexofpartition;
 
         if (max - min > 0) {
@@ -53,44 +51,9 @@ public class Methods {
         }
     }
 
-    public void mergeSort(int[] A, int min, int max) {
-
-        //randomize(A);
-        if (min == max)
-            return;
-
-        int [] temp;
-        int index1, left, right;
-        int size = max - min + 1;
-        int mid = (min + max) / 2;
-
-        temp = new int [size];
-
-        mergeSort(A, min, mid);
-        mergeSort(A, min + 1, max);
-
-        for (index1 = 0; index1 < size; index1++)
-            temp[index1] = A[min + index1];
-
-        left = 0;
-        right = mid - min + 1;
-        for (index1 = 0; index1 < size; index1++) {
-            if (right <= max - min)
-                if (left <= mid - min)
-                    if (temp[left] > temp[right])
-                        A[index1 + min] = temp[right++];
-                    else
-                        A[index1 + min] = temp[left++];
-                else
-                    A[index1 + min] = temp[right++];
-            else
-                A[index1 + min] = temp[left++];
-        }
-    }
 
     public void radix(int[] A, int maxSiffer) {
 
-        randomize(A);
         int tenInM = 1;
         int n = A.length;
 
@@ -142,6 +105,40 @@ public class Methods {
         A[right] = temp;
 
         return right;
+    }
+
+    public void mergeSort(int[] A, int min, int max) {
+
+        if (min == max)
+            return;
+
+        int [] temp;
+        int index1, left, right;
+        int size = max - min + 1;
+        int mid = (min + max) / 2;
+
+        temp = new int [size];
+
+        mergeSort(A, min, mid);
+        mergeSort(A, min + 1, max);
+
+        for (index1 = 0; index1 < size; index1++)
+            temp[index1] = A[min + index1];
+
+        left = 0;
+        right = mid - min + 1;
+        for (index1 = 0; index1 < size; index1++) {
+            if (right <= max - min)
+                if (left <= mid - min)
+                    if (temp[left] > temp[right])
+                        A[index1 + min] = temp[right++];
+                    else
+                        A[index1 + min] = temp[left++];
+                else
+                    A[index1 + min] = temp[right++];
+            else
+                A[index1 + min] = temp[left++];
+        }
     }
 
     public static void randomize(int A[]) {
