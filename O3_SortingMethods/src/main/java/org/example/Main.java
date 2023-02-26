@@ -4,6 +4,8 @@ import org.example.module.Methods;
 
 import java.util.Scanner;
 
+// https://big-o.io/
+
 public class Main {
     public static void main(String[] args) {
 
@@ -36,14 +38,18 @@ public class Main {
 
                 Methods methode = new Methods();
 
-                if (mode < 1 || mode > 4)
+                if (mode < 1 || mode > 5)
                     System.out.println("Please choose a number between 1 and 5");
 
                 /* Insert: */
                 if (mode == 1) {
                     if (n <= Max_Sequential) {
+                        time = System.currentTimeMillis();
                         methode.randomize(A);
                         methode.insertionSort(A);
+                        time = System.currentTimeMillis() - time;
+                        System.out.println("  n      t(ms)   t/n*n");
+                        System.out.printf("%6d %6d  %9.4e\n", n, time, (float)time / ((float)n * n));
                     } else
                         System.out.println("O(n²) sorting to slow for n: " + n);
                 }
@@ -54,7 +60,8 @@ public class Main {
                     time = System.currentTimeMillis();
                     methode.quickSort(A, 0, n - 1);
                     time = System.currentTimeMillis() - time;
-                    System.out.printf("Quicksort\t: %6.3f s\n", time / 1000.0);
+                    System.out.println("  n      t(ms)   t/n*log(n)");
+                    System.out.printf("%6d %6d  %9.4e\n", n, time, (float)time / ((float)n * Math.log(n)));
                 }
 
                 /*Merge: */
@@ -63,7 +70,8 @@ public class Main {
                     time = System.currentTimeMillis();
                     methode.mergeSort(A, 0, n - 1);
                     time = System.currentTimeMillis() - time;
-                    System.out.printf("Merge sort\t: %6.3f s\n", time / 1000.0);
+                    System.out.println("  n      t(ms)   t/n*log(n)");
+                    System.out.printf("%6d %6d  %9.4e\n", n, time, (float)time / ((float)n * Math.log(n)));
                 }
 
                 /*Radix: */
@@ -74,12 +82,13 @@ public class Main {
                     time = System.currentTimeMillis();
                     methode.radix(A, siff);
                     time = System.currentTimeMillis() - time;
-                    System.out.printf("Radix sort\t: %6.3f s\n", time / 1000.0);
+                    System.out.printf("Radix sort: %6.3f s\n", time/1000.0);
                 }
 
-                if (mode == 5)
+                if (mode == 5) {
+                    System.out.println("\nGoodbye");
                     sort = 0;
-
+                }
             } catch (Exception e) {
                 System.out.println("Please write a number");
             }

@@ -12,14 +12,7 @@ import java.util.*;
 
 public class Methods {
 
-    int Max_Sequential  = 100_000;
-
-    int A[];
-    int n               = 0;
-    long time           = 0;
-
   public void insertionSort(int A[]) {
-          time = System.currentTimeMillis();
 
           int n = A.length;
           //System.out.println("Testing insert: " + n);
@@ -35,9 +28,6 @@ public class Methods {
               }
               A[j] = key;
           }
-
-          time = System.currentTimeMillis() - time;
-          System.out.printf("Insertion sort\t: %6.3f s\n", time / 1000.0);
       }
 
     public void quickSort(int A[], int min, int max) {
@@ -50,7 +40,6 @@ public class Methods {
             quickSort(A, indexofpartition + 1, max);
         }
     }
-
 
     public void radix(int[] A, int maxSiffer) {
 
