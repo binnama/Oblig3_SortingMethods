@@ -12,6 +12,9 @@ public class Main {
         int A[];
         long time           = 0;
         int sort            = 1;
+        float C             = 0;
+        float O             = 0;
+        float totC          = 0;
 
         while (sort == 1){
             Scanner scanner = new Scanner(System.in);
@@ -26,6 +29,11 @@ public class Main {
                         "4: Radix\n" +
                         "5: Exit");
                 int mode = scanner.nextInt();
+
+                System.out.println("Please choose waht sortingmethod you want to use: ");
+                System.out.println("1. Sort and time\n" +
+                        "2. Estimated Big-Oh");
+                int sorter = scanner.nextInt();
 
                 int Max_n = 100_000_000;
                 int Max_Sequential = 100_000;
@@ -44,34 +52,65 @@ public class Main {
                 /* Insert: */
                 if (mode == 1) {
                     if (n <= Max_Sequential) {
-                        time = System.currentTimeMillis();
-                        methode.randomize(A);
-                        methode.insertionSort(A);
-                        time = System.currentTimeMillis() - time;
-                        System.out.println("  n      t(ms)   t/n*n");
+                        if (sorter == 1){
+                            methode.randomize(A);
+                            time = System.currentTimeMillis();
+                            methode.insertionSort(A);
+                            time = System.currentTimeMillis() - time;
+                            System.out.printf("Insert sort\t: %6.3f s\n", time / 1000.0);
+                        }
+
+                        if (sorter == 2) {
+                           for (int i = 0; i < 5; i++) {
+                               methode.randomize(A);
+                               time = System.currentTimeMillis();
+                               methode.insertionSort(A);
+                               time = System.currentTimeMillis() - time;
+                               C = (float)time / ((float)n * n);
+                               totC += C;
+                           }
+                            float avC = totC / 5;
+                            System.out.println("Avg C: \n" + avC);
+                        }
+                        //Dette er ikke O(n)! Dette er kun C så bruk løsining fra modul 1
                         System.out.printf("%6d %6d  %9.4e\n", n, time, (float)time / ((float)n * n));
+                        C = (float)time / ((float)n * n);
+
                     } else
                         System.out.println("O(n²) sorting to slow for n: " + n);
                 }
 
                 /*Quick: */
                 if (mode == 2) {
-                    methode.randomize(A);
-                    time = System.currentTimeMillis();
-                    methode.quickSort(A, 0, n - 1);
-                    time = System.currentTimeMillis() - time;
-                    System.out.println("  n      t(ms)   t/n*log(n)");
-                    System.out.printf("%6d %6d  %9.4e\n", n, time, (float)time / ((float)n * Math.log(n)));
+                    if (sorter == 1) {
+                        methode.randomize(A);
+                        time = System.currentTimeMillis();
+                        methode.quickSort(A, 0, n - 1);
+                        time = System.currentTimeMillis() - time;
+                        System.out.printf("Quick sort\t: %6.3f s\n", time/1000.0);
+                    }
+
+                    if (sorter == 2) {
+                        for (int i = 0; i < 5; i++) {
+                            methode.randomize(A);
+                            time = System.currentTimeMillis();
+                            methode.quickSort(A, 0, n - 1);
+                            time = System.currentTimeMillis() - time;
+                            C = (float) ((float)time / ((float)n * Math.log(n)));
+                            totC += C;
+                        }
+                        float avC = totC / 5;
+                        System.out.println("Avg C: \n" + avC);
+                    }
                 }
 
                 /*Merge: */
                 if (mode == 3) {
                     methode.randomize(A);
                     time = System.currentTimeMillis();
-                    methode.mergeSort(A, 0, n - 1);
+                    methode.mergeSort(A);
                     time = System.currentTimeMillis() - time;
-                    System.out.println("  n      t(ms)   t/n*log(n)");
-                    System.out.printf("%6d %6d  %9.4e\n", n, time, (float)time / ((float)n * Math.log(n)));
+                    System.out.printf("Merge sort: %6.3f s\n", time/1000.0);
                 }
 
                 /*Radix: */

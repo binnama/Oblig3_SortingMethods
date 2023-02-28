@@ -1,4 +1,4 @@
-// Relevant for oblig3!!!
+package org.example.module;// Relevant for oblig3!!!
 // Bruk denne som utgangspunkt :)
 //
 
@@ -15,11 +15,11 @@ public class sortingTest
 	int  MAX_SEQUENTIAL = 100000, MAX_N = 100000000;
 
 	int A[];
-	int n = 0;
+	int n = 50000;
 	long time = 0;
 
 	// Read number of elements to be sorted from command line
-	n = Integer.parseInt(args[0]);
+	//n = Integer.parseInt(args[0]);
 	if (n < 0 || n > MAX_N)
 	{
 	    System.out.println("Use  1 <= n <= " + MAX_N);
