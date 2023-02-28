@@ -70,12 +70,8 @@ public class Main {
                                totC += C;
                            }
                             float avC = totC / 5;
-                            System.out.println("Avg C: \n" + avC);
+                            System.out.println("The constant C is " + avC + " for n = " + n);
                         }
-                        //Dette er ikke O(n)! Dette er kun C så bruk løsining fra modul 1
-                        System.out.printf("%6d %6d  %9.4e\n", n, time, (float)time / ((float)n * n));
-                        C = (float)time / ((float)n * n);
-
                     } else
                         System.out.println("O(n²) sorting to slow for n: " + n);
                 }
@@ -100,28 +96,52 @@ public class Main {
                             totC += C;
                         }
                         float avC = totC / 5;
-                        System.out.println("Avg C: \n" + avC);
+                        System.out.println("The constant C is " + avC + " for n = " + n);
                     }
                 }
 
                 /*Merge: */
                 if (mode == 3) {
-                    methode.randomize(A);
-                    time = System.currentTimeMillis();
-                    methode.mergeSort(A);
-                    time = System.currentTimeMillis() - time;
-                    System.out.printf("Merge sort: %6.3f s\n", time/1000.0);
+                    if (sorter == 1) {
+                        methode.randomize(A);
+                        time = System.currentTimeMillis();
+                        methode.mergeSort(A);
+                        time = System.currentTimeMillis() - time;
+                        System.out.printf("Merge sort: %6.3f s\n", time/1000.0);
+                    }
+                    if (sorter == 2) {
+                        methode.randomize(A);
+                        time = System.currentTimeMillis();
+                        methode.mergeSort(A);
+                        time = System.currentTimeMillis() - time;
+                        C = (float) ((float)time / ((float)n * Math.log(n)));
+                        totC += C;
+                    }
+                    float avC = totC / 5;
+                    System.out.println("The constant C is " + avC + " for n = " + n);
                 }
 
                 /*Radix: */
                 if (mode == 4) {
                     System.out.println("Please insert max amount of siffers: ");
                     int siff = scanner.nextInt();
-                    methode.randomize(A);
-                    time = System.currentTimeMillis();
-                    methode.radix(A, siff);
-                    time = System.currentTimeMillis() - time;
-                    System.out.printf("Radix sort: %6.3f s\n", time/1000.0);
+                    if (sorter == 1) {
+                        methode.randomize(A);
+                        time = System.currentTimeMillis();
+                        methode.radix(A, siff);
+                        time = System.currentTimeMillis() - time;
+                        System.out.printf("Radix sort: %6.3f s\n", time/1000.0);
+                    }
+                    if (sorter == 2) {
+                        methode.randomize(A);
+                        time = System.currentTimeMillis();
+                        methode.radix(A, siff);
+                        time = System.currentTimeMillis() - time;
+                        C = (float)time / n;
+                        totC += C;
+                    }
+                    float avC = totC / 5;
+                    System.out.println("The constant C is " + avC + " for n = " + n);
                 }
 
                 if (mode == 5) {
