@@ -13,8 +13,8 @@ public class Main {
         long time           = 0;
         int sort            = 1;
         float C             = 0;
-        float O             = 0;
         float totC          = 0;
+        int testRuns        = 5;
 
         while (sort == 1){
             Scanner scanner = new Scanner(System.in);
@@ -59,9 +59,8 @@ public class Main {
                             time = System.currentTimeMillis() - time;
                             System.out.printf("Insert sort\t: %6.3f s\n", time / 1000.0);
                         }
-
                         if (sorter == 2) {
-                           for (int i = 0; i < 5; i++) {
+                           for (int i = 0; i < testRuns; i++) {
                                methode.randomize(A);
                                time = System.currentTimeMillis();
                                methode.insertionSort(A);
@@ -69,8 +68,8 @@ public class Main {
                                C = (float)time / ((float)n * n);
                                totC += C;
                            }
-                            float avC = totC / 5;
-                            System.out.println("The constant C is " + avC + " for n = " + n);
+                            float avC = totC / testRuns;
+                            System.out.println("Insert have a constant C that is " + avC + " for n = " + n);
                         }
                     } else
                         System.out.println("O(n²) sorting to slow for n: " + n);
@@ -85,9 +84,8 @@ public class Main {
                         time = System.currentTimeMillis() - time;
                         System.out.printf("Quick sort\t: %6.3f s\n", time/1000.0);
                     }
-
                     if (sorter == 2) {
-                        for (int i = 0; i < 5; i++) {
+                        for (int i = 0; i < testRuns; i++) {
                             methode.randomize(A);
                             time = System.currentTimeMillis();
                             methode.quickSort(A, 0, n - 1);
@@ -95,8 +93,8 @@ public class Main {
                             C = (float) ((float)time / ((float)n * Math.log(n)));
                             totC += C;
                         }
-                        float avC = totC / 5;
-                        System.out.println("The constant C is " + avC + " for n = " + n);
+                        float avC = totC / testRuns;
+                        System.out.println("Quick have a constant C that is " + avC + " for n = " + n);
                     }
                 }
 
@@ -110,15 +108,17 @@ public class Main {
                         System.out.printf("Merge sort: %6.3f s\n", time/1000.0);
                     }
                     if (sorter == 2) {
-                        methode.randomize(A);
-                        time = System.currentTimeMillis();
-                        methode.mergeSort(A);
-                        time = System.currentTimeMillis() - time;
-                        C = (float) ((float)time / ((float)n * Math.log(n)));
-                        totC += C;
+                        for (int i = 0; i < testRuns; i++) {
+                            methode.randomize(A);
+                            time = System.currentTimeMillis();
+                            methode.mergeSort(A);
+                            time = System.currentTimeMillis() - time;
+                            C = (float) ((float) time / ((float) n * Math.log(n)));
+                            totC += C;
+                        }
+                        float avC = totC / testRuns;
+                        System.out.println("Merge have a constant C that is " + avC + " for n = " + n);
                     }
-                    float avC = totC / 5;
-                    System.out.println("The constant C is " + avC + " for n = " + n);
                 }
 
                 /*Radix: */
@@ -133,15 +133,17 @@ public class Main {
                         System.out.printf("Radix sort: %6.3f s\n", time/1000.0);
                     }
                     if (sorter == 2) {
-                        methode.randomize(A);
-                        time = System.currentTimeMillis();
-                        methode.radix(A, siff);
-                        time = System.currentTimeMillis() - time;
-                        C = (float)time / n;
-                        totC += C;
+                        for (int i = 0; i < testRuns; i++) {
+                            methode.randomize(A);
+                            time = System.currentTimeMillis();
+                            methode.radix(A, siff);
+                            time = System.currentTimeMillis() - time;
+                            C = (float) time / n;
+                            totC += C;
+                        }
+                        float avC = totC / testRuns;
+                        System.out.println("Radix have a constant C that is " + avC + " for n = " + n);
                     }
-                    float avC = totC / 5;
-                    System.out.println("The constant C is " + avC + " for n = " + n);
                 }
 
                 if (mode == 5) {
